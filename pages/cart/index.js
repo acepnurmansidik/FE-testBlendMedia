@@ -9,8 +9,18 @@ import { formatDate } from "../../utils/formatDate";
 import { useEffect } from "react";
 import Button from "../../components/Button";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function Dashboard({ data }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      router.push("/");
+    }
+  });
   return (
     <>
       <Head>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import NavLink from "../NavLink";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Button from "../Button";
 
 const Navbar = () => {
   const router = useRouter();
@@ -66,39 +67,36 @@ const Navbar = () => {
                       aria-labelledby="navbarDropdown"
                     >
                       <li>
-                        <Link href={"/dashboard"}>
-                          <a className="dropdown-item">Dashboard</a>
+                        <Link href={"/dashboard"} className="dropdown-item">
+                          Dashboard
                         </Link>
                       </li>
                       <li>
-                        <Link className="dropdown-item" href="#">
+                        <Link href={"/setting"} className="dropdown-item">
                           Settings
                         </Link>
                       </li>
-                      <li>
-                        <Link className="dropdown-item" href="#">
-                          Rewards
-                        </Link>
-                      </li>
                       <li onClick={() => handleLogout()}>
-                        <Link className="dropdown-item">Sign Out</Link>
+                        <Link className="dropdown-item" href={"/"}>
+                          Sign Out
+                        </Link>
                       </li>
                     </ul>
 
-                    <div className="collapse" id="collapseExample">
+                    {/* <div className="collapse" id="collapseExample">
                       <ul className="list-group">
                         <li>
-                          <Link className="list-group-item" href="#">
+                          <Link className="list-group-item" href="/">
                             Dashboard
                           </Link>
                         </li>
                         <li>
-                          <Link className="list-group-item" href="#">
+                          <Link className="list-group-item" href="/">
                             Settings
                           </Link>
                         </li>
                         <li>
-                          <Link className="list-group-item" href="#">
+                          <Link className="list-group-item" href="/">
                             Rewards
                           </Link>
                         </li>
@@ -106,7 +104,7 @@ const Navbar = () => {
                           <Link className="list-group-item"></Link>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ) : (
