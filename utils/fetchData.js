@@ -24,3 +24,11 @@ export const putData = (url, payload, token) => {
     },
   });
 };
+
+export const deleteData = (url, payload, token) => {
+  return axios.delete(`${url}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

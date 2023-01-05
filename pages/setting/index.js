@@ -6,21 +6,28 @@ import FormCheckout from "../../components/FormCheckout";
 import Navbar from "../../components/Navbar";
 import { getData } from "../../utils/fetchData";
 import { formatDate } from "../../utils/formatDate";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import FormSettings from "../../components/FormSettings";
+import jwt_decode from "jwt-decode";
 
 export default function Dashboard({ data }) {
   const router = useRouter();
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const token = Cookies.get("token");
+
+    const decode = jwt_decode(token);
+    setUser({ ...decode });
     if (!token) {
       router.push("/");
     }
-  });
+  }, [router]);
+
   return (
     <>
       <Head>
@@ -50,34 +57,10 @@ export default function Dashboard({ data }) {
             </div>
             <div className="side-btn d-flex flex-column">
               <Link href={"/dashboard"} className="btn-side-group d-flex">
-                <Button
-                  variant={"btn-side-menu"}
-                  action={() => console.log("first")}
-                >
-                  Dasboard
-                </Button>
-              </Link>
-              <Link href={"/favorite"} className="btn-side-group d-flex">
-                <Button
-                  variant={"btn-side-menu"}
-                  action={() => console.log("first")}
-                >
-                  Favorite
-                </Button>
-              </Link>
-              <Link href={"/cart"} className="btn-side-group d-flex">
-                <Button
-                  variant={"btn-side-menu"}
-                  action={() => console.log("first")}
-                >
-                  Cart
-                </Button>
+                <Button variant={"btn-side-menu"}>Dasboard</Button>
               </Link>
               <Link href={"/setting"} className="btn-side-group d-flex">
-                <Button
-                  variant={"btn-side-menu bg-primary text-white"}
-                  action={() => console.log("first")}
-                >
+                <Button variant={"btn-side-menu bg-primary text-white"}>
                   Setting
                 </Button>
               </Link>
@@ -86,25 +69,9 @@ export default function Dashboard({ data }) {
           <div className="side-menu-info p-4">
             <div className="header-side-menu">
               <h2 className="mb-3 mt-4">Akun</h2>
-              <p>Rp. 324324</p>
             </div>
             <div className="trx-side-menu p-3">
-              <div className="item-list-trx d-flex flex-row justify-content-between">
-                <div className="info-trx-product d-flex flex-row justify-content-between">
-                  <img
-                    src={"/images/details-image.png"}
-                    width={90}
-                    alt="tokosidia"
-                  />
-                  <div className="info-product-trx d-flex flex-column">
-                    <div>Ayam</div>
-                    <div>Rp.444</div>
-                  </div>
-                </div>
-                <div className="info-product-status d-flex justify-content-center align-items-center">
-                  <div>success</div>
-                </div>
-              </div>
+              <FormSettings user={user} />
             </div>
           </div>
         </div>

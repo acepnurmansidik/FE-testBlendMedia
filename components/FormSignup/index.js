@@ -13,9 +13,8 @@ const FormSignup = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    firstname: "",
-    lastname: "",
-    role: "",
+    name: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -23,40 +22,21 @@ const FormSignup = () => {
   };
 
   const handleSubmit = async () => {
-    if (keyword === "otp") {
-      putData("api/v1/active", {
-        otp: otp,
-        email: form.email,
-      }).then((res) => {
-        if (res.data) {
-          toast.success("berhasil aktipkan akun", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          router.push("/signin");
-        }
-      });
-    } else {
-      postData("api/v1/auth/signup", form).then((res) => {
-        if (res.data) {
-          toast.success("berhasil signup", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          router.push({ pathname: "/signup", query: { keyword: "otp" } });
-        }
+    if (form.password !== form.confirmPassword) {
+      return toast.error("Password tidak sesuai", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
+
+    const res = await postData("api/v1/sign-up", form);
+
+    if (res) return router.push("/signin");
   };
 
   return (
@@ -77,7 +57,7 @@ const FormSignup = () => {
           <TextInput
             label={"Your Name"}
             type={"text"}
-            value={form.firstname}
+            value={form.name}
             name="name"
             placeholder="Your name here"
             onChange={handleChange}
@@ -104,8 +84,8 @@ const FormSignup = () => {
           <TextInput
             label={"Confirm  Password (6 characters)"}
             type={"password"}
-            value={form.password}
-            name="password"
+            value={form.confirmPassword}
+            name="confirmPassword"
             placeholder="Type your confirm password"
             onChange={handleChange}
           />
