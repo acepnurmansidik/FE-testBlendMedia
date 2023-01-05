@@ -3,7 +3,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-.main-btn, .btn-green, .btn-navy {
+.main-btn, .btn-green, .btn-navy, .btn-stok {
   padding: 13px 35px;
   border-radius: 45px;
   font-size: 16px;
@@ -13,12 +13,32 @@
   transition: ease-out 0.3s;
   outline: none;
 }
-
+ .brand-name{
+  letter-spacing: 2px;
+  font-size: 25px;
+  color: #151A26;
+  font-weight: 600;
+ }
 .btn-navy {
   background-color: #252837;
   font-weight: 500;
   color: #FFFFFF;
 }
+
+.qty-count{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qty-count p{
+  font-size: 20px;
+}
+.qty-info {
+  padding: 5px 15px;
+  font-size: 20px;
+}
+
 .btn-navy:hover {
   color: #FFFFFF;
 }
@@ -33,6 +53,18 @@
   box-shadow: 0px 4px 15px rgba(1, 251, 52, 0.35);
 }
 .btn-green:hover {
+  color: initial;
+}
+
+.btn-stok {
+  color: #151A26;
+  padding: 7px 15px;
+  border-radius: 2px;
+  font-weight: 600;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 15px rgba(1, 251, 52, 0.35);
+}
+.btn-stok:hover {
   color: initial;
 }
 
@@ -262,7 +294,7 @@ footer .all-rights {
 
 .grow-today {
   background-color: #F5F7F9;
-  padding: 25px 0;
+  padding: 50px 0;
 }
 .grow-today .gap {
   row-gap: 48px;
@@ -480,6 +512,12 @@ footer .all-rights {
   font-size: 14px;
   font-weight: 400;
 }
+
+.price{
+  display: flex;
+  justify-content: space-between;
+}
+
 .details-content .card-event hr {
   margin: 30px 0;
   color: #DFDFDF;

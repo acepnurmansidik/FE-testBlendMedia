@@ -22,6 +22,9 @@ const Navbar = () => {
   return (
     <nav className="container navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
+        <Link href={"/"} className="navbar-brand">
+          <div className="brand-name">Tokosidia</div>
+        </Link>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div
             className={`navbar-nav ${

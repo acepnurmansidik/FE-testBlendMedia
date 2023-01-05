@@ -1,17 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
 import React from "react";
 const Footer = () => {
   return (
     <footer className="footer bg-navy">
       <div className="container">
-        <a href="index.html">
+        <Link href={"/"}>
+          <div className="brand-name">Tokosidia</div>
           {/* <img src="/images/logo.svg" alt="semina" /> */}
-        </a>
+        </Link>
         <div className="mt-3 d-flex flex-row flex-wrap footer-content align-items-baseline">
           <p className="paragraph">
             Tokosidia adalah tempat di mana <br className="d-md-block d-none" />{" "}
             anda dapat mencari perlengkapan kebutuhan{" "}
-            <br className="d-md-block d-none" /> anda.
+            <br className="d-md-block d-none" /> anda penuh dengan kenangan.
           </p>
           <div className="d-flex flex-column footer-links">
             <div className="title-links mb-3">Features</div>
