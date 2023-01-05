@@ -18,7 +18,7 @@ const FormSignin = () => {
   };
 
   const handleSubmit = async () => {
-    const res = await postData("/api/v1/auth/signin", form);
+    const res = await postData("/api/v1/sign-in", form);
 
     toast.success("berhasil signin", {
       position: "top-right",
@@ -40,7 +40,7 @@ const FormSignin = () => {
         type={"email"}
         name="email"
         value={form.email}
-        placeholder={"semina@bwa.com"}
+        placeholder={"youremail@gmail.com"}
         onChange={handleChange}
       />
 

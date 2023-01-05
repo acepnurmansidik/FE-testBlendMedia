@@ -75,19 +75,11 @@ const FormSignup = () => {
       ) : (
         <>
           <TextInput
-            label={"First Name"}
+            label={"Your Name"}
             type={"text"}
             value={form.firstname}
-            name="firstname"
-            placeholder="First name here"
-            onChange={handleChange}
-          />
-          <TextInput
-            label={"Last Name"}
-            type={"text"}
-            name="lastname"
-            value={form.lastname}
-            placeholder="First name here"
+            name="name"
+            placeholder="Your name here"
             onChange={handleChange}
           />
 
@@ -96,7 +88,7 @@ const FormSignup = () => {
             type={"email"}
             name="email"
             value={form.email}
-            placeholder={"semina@bwa.com"}
+            placeholder={"youremail@gmail.com"}
             onChange={handleChange}
           />
 
@@ -110,11 +102,11 @@ const FormSignup = () => {
           />
 
           <TextInput
-            label={"Role"}
-            type={"text"}
-            value={form.role}
-            name="role"
-            placeholder="ex: Product Designer"
+            label={"Confirm  Password (6 characters)"}
+            type={"password"}
+            value={form.password}
+            name="password"
+            placeholder="Type your confirm password"
             onChange={handleChange}
           />
         </>
