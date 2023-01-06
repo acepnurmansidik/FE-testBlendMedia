@@ -7,14 +7,21 @@ import CardEvent from "../../components/CardEvent";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
-import { getData } from "../../utils/fetchData";
+import { getData, postData } from "../../utils/fetchData";
 import moment from "moment";
 import { formatDate } from "../../utils/formatDate";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export default function DetailPage({ detailPage, id }) {
   const [data, setData] = useState([]);
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
+  const [form, setForm] = useState({
+    _id: detailPage._id,
+    product_name: detailPage.product_name,
+    sumQty: 0,
+  });
+
   useState(() => {
     const fetchData = async () => {
       try {
@@ -29,16 +36,31 @@ export default function DetailPage({ detailPage, id }) {
 
   const router = useRouter();
 
-  const handleSubmit = (ticketId, organizer) => {
+  const handleSubmit = async () => {
     const token = Cookies.get("token");
     if (!token) {
       return router.push("/signin");
     } else {
-      router.push(
-        `/checkout/${id}?ticketId=${ticketId}&organizer=${organizer}`
-      );
+      if (qty > 0) {
+        const res = await postData("/api/v1/order", form, token);
+
+        console.log(res);
+        if (res) {
+          toast.success("berhasil transaksi berhasil", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          router.push("/");
+        }
+      }
     }
   };
+
   return (
     <>
       <Head>
@@ -51,12 +73,12 @@ export default function DetailPage({ detailPage, id }) {
         <Navbar />
       </section>
 
-      <div className="preview-image bg-navy text-center">
+      <div className="preview-image bg-navy text-center mt-4">
         <img
           src={
-            `${process.env.NEXT_PUBLIC_API_IMAGE}/${detailPage?.product_image_url?.name}`
+            detailPage?.product_image_url?.name
               ? `${process.env.NEXT_PUBLIC_API_IMAGE}/${detailPage?.product_image_url?.name}`
-              : "/images/details-image.png"
+              : "/images/download.png"
           }
           className="img-content"
           alt="tokosidia"
@@ -83,7 +105,11 @@ export default function DetailPage({ detailPage, id }) {
             <h6>Atur jumlah dan catatan</h6>
             <div className="d-flex align-items-center gap-3 mt-3">
               <img
-                src={`${process.env.NEXT_PUBLIC_API_IMAGE}/${detailPage?.product_image_url.name}`}
+                src={
+                  detailPage?.product_image_url?.name
+                    ? `${process.env.NEXT_PUBLIC_API_IMAGE}/${detailPage?.product_image_url?.name}`
+                    : "/images/download.png"
+                }
                 alt="semina"
                 width="60"
               />
@@ -96,6 +122,7 @@ export default function DetailPage({ detailPage, id }) {
                   action={() => {
                     if (detailPage.product_qty > 0 && qty !== 0) {
                       setQty(qty - 1);
+                      form.sumQty = qty;
                     }
                   }}
                   variant={"btn-stok"}
@@ -110,6 +137,7 @@ export default function DetailPage({ detailPage, id }) {
                       qty !== detailPage.product_qty
                     ) {
                       setQty(qty + 1);
+                      form.sumQty = qty;
                     }
                   }}
                   variant={"btn-stok"}
@@ -129,10 +157,7 @@ export default function DetailPage({ detailPage, id }) {
               </span>
             </div>
 
-            <Button
-              variant={"btn-green"}
-              action={() => handleSubmit(ticket._id, detailPage.organizer)}
-            >
+            <Button variant={"btn-green"} action={() => handleSubmit()}>
               Checkout
             </Button>
           </div>
