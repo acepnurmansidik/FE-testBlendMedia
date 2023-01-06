@@ -213,16 +213,30 @@ footer .all-rights {
   color: #151A26;
 }
 
+.btn-navigation{
+  padding: 7px;
+  width: 100px;
+  border-radius: 10px;
+  text-align: center;
+  background-color:#00A0F5;
+  color: #FFFFFF;
+}
+
 /* .side-menu-btn, .side-menu-info{ 
 } */
 .side-menu-btn, .btn-side-group, .btn-side-menu{
   flex: 1;
 }
 .item-list-trx img{
-  border-radius: 5px;
+  border-radius: 7px;
 }
 .side-menu-info{
   flex: 3;
+}
+
+.icon-btn{
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .info-trx-product{

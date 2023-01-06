@@ -15,8 +15,12 @@ const CardEvent = ({ data, title, subTitle }) => {
               <Link href={`/detail/${data._id}`}>
                 <div className="card-grow h-100">
                   <img
-                    src={`${process.env.NEXT_PUBLIC_API_IMAGE}/${data.product_image_url.name}`}
-                    alt="semina"
+                    src={
+                      data?.product_image_url?.name
+                        ? `${process.env.NEXT_PUBLIC_API_IMAGE}/${data.product_image_url.name}`
+                        : "/images/download.png"
+                    }
+                    alt="tokosidia"
                   />
                   <div className="card-content">
                     <div className="card-title">{data.product_name}</div>

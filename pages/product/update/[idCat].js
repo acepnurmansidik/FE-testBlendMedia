@@ -1,19 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import moment from "moment";
-import Head from "next/head";
-import Footer from "../../components/Footer";
-import FormCheckout from "../../components/FormCheckout";
-import Navbar from "../../components/Navbar";
-import { getData } from "../../utils/fetchData";
-import { formatDate } from "../../utils/formatDate";
 import { useEffect, useState } from "react";
-import Button from "../../components/Button";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { useRouter } from "next/router";
 import jwt_decode from "jwt-decode";
+import Head from "next/head";
+import Navbar from "../../../components/Navbar";
+import Button from "../../../components/Button";
+import Footer from "../../../components/Footer";
+import { getData } from "../../../utils/fetchData";
+import FormUpdate from "./FormUpdate";
 
-export default function Dashboard({ data }) {
+export default function Dashboard({ data, token }) {
   const router = useRouter();
   const [user, setUser] = useState({});
 
@@ -57,15 +55,15 @@ export default function Dashboard({ data }) {
             {user.role !== "customer" ? (
               <div className="side-btn d-flex flex-column">
                 <Link href={"/dashboard"} className="btn-side-group d-flex">
-                  <Button variant={"btn-side-menu bg-primary text-white"}>
-                    Dashboard
-                  </Button>
+                  <Button variant={"btn-side-menu"}>Dashboard</Button>
                 </Link>
                 <Link href={"/category"} className="btn-side-group d-flex">
                   <Button variant={"btn-side-menu"}>Category</Button>
                 </Link>
                 <Link href={"/product"} className="btn-side-group d-flex">
-                  <Button variant={"btn-side-menu"}>Product</Button>
+                  <Button variant={"btn-side-menu bg-primary text-white"}>
+                    Product
+                  </Button>
                 </Link>
               </div>
             ) : (
@@ -81,40 +79,7 @@ export default function Dashboard({ data }) {
               </div>
             )}
           </div>
-          <div className="side-menu-info p-4">
-            <div className="header-side-menu">
-              <h2 className="mb-3 mt-4">My Transaction</h2>
-              {/* <p>Rp. 324324</p> */}
-            </div>
-            {user.role === "customer"
-              ? data.map((dataTrx) => (
-                  <div className="trx-side-menu p-3 mt-5" key={dataTrx._id}>
-                    <div className="item-list-trx d-flex flex-row justify-content-between">
-                      <div className="info-trx-product d-flex flex-row justify-content-between">
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_API_IMAGE}/${dataTrx?.product_image_url?.name}`}
-                          width={90}
-                          alt="tokosidia"
-                        />
-                        <div className="info-product-trx d-flex flex-column">
-                          <div>{dataTrx.product_name}</div>
-                          <div>{moment(dataTrx.date).format("LLLL")}</div>
-                          <div>
-                            {new Intl.NumberFormat("id", {
-                              style: "currency",
-                              currency: "IDR",
-                            }).format(dataTrx.total)}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="info-product-status d-flex justify-content-center align-items-center">
-                        <div>{dataTrx.status}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              : ""}
-          </div>
+          <FormUpdate data={data} token={token} />
         </div>
       </section>
       <Footer />
@@ -123,11 +88,15 @@ export default function Dashboard({ data }) {
 }
 
 export async function getServerSideProps(context) {
-  const req = await getData(`/api/v1/order`, {}, context.req.cookies.token);
+  const req = await getData(
+    `/api/v1/product/${context.params.idCat}`,
+    {},
+    context.req.cookies.token
+  );
 
   const res = req.data;
 
   return {
-    props: { data: res },
+    props: { data: res, token: context.req.cookies.token },
   };
 }
